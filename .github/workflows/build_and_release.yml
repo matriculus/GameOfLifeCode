@@ -1,14 +1,15 @@
 name: Package Games And Release
 
+permissions:
+    contents: write
+
 on:
     workflow_dispatch:
     push:
         branches: ["main"]
-        tags:
-            - v**
 
 jobs:
-    build:
+    Build-And-Release:
         runs-on: windows-latest
         steps:
             - name: Checkout
