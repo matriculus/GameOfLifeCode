@@ -6,7 +6,8 @@ permissions:
 on:
     workflow_dispatch:
     push:
-        branches: ["main"]
+        tags:
+            - 'v*.*.**'
 
 jobs:
     Build-And-Release:
@@ -25,21 +26,13 @@ jobs:
 
             - name: Package
               run: pyinstaller --onefile -w ConwayGameOfLife/main.py -n ConwayGameOfLife
-            
-            - name: GH Release
-              run: |
-                gh release delete ${{github.ref_name}} -y
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            
+
             - name: Upload Artifacts
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v3
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: ${{github.ref_name}}
                 body_path: release.md
                 files: |
                     dist/ConwayGameOfLife.exe
                     LICENSE
-
