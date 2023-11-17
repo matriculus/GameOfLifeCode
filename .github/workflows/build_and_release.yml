@@ -26,18 +26,20 @@ jobs:
             - name: Package
               run: pyinstaller --onefile -w ConwayGameOfLife/main.py -n ConwayGameOfLife
             
-            # - name: Upload Artifacts
-            #   uses: softprops/action-gh-release@v1
-            #   env:
-            #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #   with:
-            #     body_path: release.md
-            #     files: |
-            #         dist/ConwayGameOfLife.exe
-            #         LICENSE
             - name: GH Release
               run: |
-                gh release create --notes-file release.md 'dist/ConwayGameOfLife.exe# ConwayGameOfLife' -t GameOfLife
+                gh release delete ${{github.ref_name}} -y
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+            - name: Upload Artifacts
+              uses: softprops/action-gh-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: ${{github.ref_name}}
+                body_path: release.md
+                files: |
+                    dist/ConwayGameOfLife.exe
+                    LICENSE
 
