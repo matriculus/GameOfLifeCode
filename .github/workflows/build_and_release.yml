@@ -39,7 +39,6 @@ jobs:
             - name: GH Release
               run: |
                 gh release create \
-                    --latest \
                     --notes-file release.md \
                     'dist/ConwayGameOfLife.exe# ConwayGameOfLife'\
                     -t GameOfLife
