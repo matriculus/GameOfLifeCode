@@ -1,0 +1,31 @@
+name: Package Games And Release
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    build:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+            
+            - name: Install requirements
+              run: pip install -r requirements
+
+            - name: Package
+              run: pyinstaller --onefile -w ConwayGameOfLife/main.py -n ConwayGameOfLife
+            
+            - name: Upload Artifacts
+              uses: softprops/action-gh-release@v1
+              with:
+                body_path: release.md
+                files: |
+                    dist/ConwayGameOfLife.exe
+                    LICENSE
