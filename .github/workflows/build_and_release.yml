@@ -25,7 +25,6 @@ jobs:
             
             - name: Upload Artifacts
               uses: softprops/action-gh-release@v1
-              if: startsWith(github.ref, 'refs/tags/')
               with:
                 body_path: release.md
                 files: |
