@@ -1,6 +1,7 @@
 name: Package Games And Release
 
 on:
+    workflow_dispatch:
     push:
         branches: ["main"]
 
