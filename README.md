@@ -29,3 +29,7 @@ Game of life codes are set of simulations which leads to a life-like behaviour b
 ### Conway's Game Of Life
 
 ![Conway's Game Of Life](ConwayGameOfLife.gif)
+
+### Code Of Life
+
+![Code Of Life](CodeOfLife.gif)
