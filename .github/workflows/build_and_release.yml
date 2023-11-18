@@ -22,7 +22,9 @@ jobs:
                 python-version: '3.11'
             
             - name: Install requirements
-              run: python tools/setup.py install
+              run: |
+                pip install -r requirements.txt
+                python tools/setup.py install
 
             - name: Package ConwayGameOfLife
               run: pyinstaller --onefile -w ConwayGameOfLife/main.py -n ConwayGameOfLife
