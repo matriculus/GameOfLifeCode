@@ -22,29 +22,33 @@ class ConwayGameOfLife:
         self.__size = size
         self.__cells = np.zeros((self.__height, self.__width))
 
-        self.width = self.__width * self.__size
-        self.height = self.__height * self.__size
+        self.__width = self.__width * self.__size
+        self.__height = self.__height * self.__size
 
         self.initialize()
 
     def initialize(self):
         pygame.init()
-        title = f"{self.__class__.__qualname__}"
-        self.__window = Window(self.width, self.height, title)
-        self.__clock = pygame.time.Clock()
+        title = self.get_title()
+        self.__window = Window(self.__width, self.__height, title)
         self.__window.fill(GRID)
         self.update()
+
+    def get_title(self):
+        return self.__class__.__qualname__
 
     def run(self, recorder=None):
         self.__window.flip()
         self.__window.update()
 
+        clock = pygame.time.Clock()
+
         running = False
         record = False
 
         while True:
-            self.__clock.tick(self.__fps)
-            if record:
+            clock.tick(self.__fps)
+            if record and recorder:
                 self.__window.append_title("Recording")
             else:
                 self.__window.reset_title()
@@ -79,7 +83,7 @@ class ConwayGameOfLife:
                 self.__window.update()
                 if record and recorder:
                     array2d = self.__window.capture_to_string()
-                    recorder.capture(array2d, (self.width, self.height))
+                    recorder.capture(array2d, (self.__width, self.__height))
 
     def update(self, with_progress=False):
         updated_cells = np.zeros(self.__cells.shape)
@@ -89,9 +93,7 @@ class ConwayGameOfLife:
                 np.sum(self.__cells[row - 1 : row + 2, col - 1 : col + 2])
                 - self.__cells[row, col]
             )
-            colour = (
-                BACKGROUND if self.__cells[row, col] == 0 else ALIVE_NEXT
-            )
+            colour = BACKGROUND if self.__cells[row, col] == 0 else ALIVE_NEXT
 
             if self.__cells[row, col] == 1:
                 if alive < 2 or alive > 3:
@@ -124,7 +126,7 @@ class ConwayGameOfLife:
 def main():
     game = ConwayGameOfLife(WIDTH, HEIGHT, SIZE)
     recorder = Recorder(
-        "ConwayGameOfLife",
+        game.get_title(),
         extension="gif",
         fps=FPS,
     )
@@ -132,5 +134,4 @@ def main():
 
 
 if __name__ == "__main__":
-    print(__file__)
     main()

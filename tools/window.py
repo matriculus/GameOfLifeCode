@@ -1,5 +1,6 @@
 import pygame
 
+
 class Window:
     def __init__(self, width: int, height: int, title: str):
         self.__width = width

@@ -4,3 +4,7 @@ class Colour:
     GRAY = (40, 40, 40)
     DARK_GRAY = (10, 10, 10)
     LIGHT_GRAY = (170, 170, 170)
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    YELLOW = (255, 255, 0)
